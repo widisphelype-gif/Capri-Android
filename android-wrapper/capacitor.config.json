@@ -1,0 +1,8 @@
+{
+  "appId": "com.capri.mobile",
+  "appName": "Capri",
+  "webDir": "dist",
+  "server": {
+    "cleartext": false
+  }
+}
