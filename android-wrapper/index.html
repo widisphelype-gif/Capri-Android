@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b0d"><title>Capri Mobile</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#080b0d;color:#effff6}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#14352c 0%,#080b0d 55%);display:grid;place-items:center;padding:24px}
+main{width:min(100%,480px);border:1px solid #1d5944;border-radius:24px;padding:28px;background:#0b1211;box-shadow:0 0 55px #00ff9d12}
+.logo{font-size:13px;letter-spacing:.28em;color:#65ffb5;font-weight:800}.mark{font-size:52px;font-weight:900;letter-spacing:-.08em;margin:16px 0 4px}.mark span{color:#67ffb7}p{color:#a5b8af;line-height:1.55}.field{display:flex;flex-direction:column;gap:9px;margin:24px 0 14px}label{font-size:13px;color:#b8c9c1}input{width:100%;padding:16px;border:1px solid #315b49;border-radius:12px;background:#080e0c;color:white;font-size:15px;outline:none}input:focus{border-color:#65ffb5;box-shadow:0 0 0 3px #65ffb51a}button{width:100%;padding:16px;border:0;border-radius:12px;background:#65ffb5;color:#06110c;font-size:15px;font-weight:800}small{display:block;color:#72867c;margin-top:18px;line-height:1.5}.error{color:#ff8c9c;font-size:13px;min-height:20px}
+</style>
+</head>
+<body><main><div class="logo">NIGHT CITY // MOBILE</div><div class="mark">capri<span>.</span></div><p>Seu agente de programação, agora no Android. Conecte ao servidor Capri que está executando no seu computador ou servidor.</p>
+<form id="connect"><div class="field"><label for="server">Endereço do servidor Capri</label><input id="server" type="url" placeholder="https://seu-servidor:4096" autocomplete="url" required></div><div class="error" id="error"></div><button type="submit">CONECTAR AO CAPRI ↗</button></form>
+<small>O app Android funciona como cliente. O serviço Capri precisa estar rodando em outro dispositivo e acessível pela rede. Use HTTPS em conexões pela internet. Nenhuma senha é solicitada ou armazenada por esta tela.</small></main>
+<script>
+const input=document.querySelector('#server'), form=document.querySelector('#connect'), error=document.querySelector('#error');
+try{input.value=localStorage.getItem('capri-server')||''}catch{}
+form.addEventListener('submit',e=>{e.preventDefault();error.textContent='';let value=input.value.trim();try{const url=new URL(value);if(!['https:','http:'].includes(url.protocol))throw Error();if(url.protocol==='http:'&&!['localhost','127.0.0.1'].includes(url.hostname))throw Error('Use HTTPS para conexões fora do dispositivo.');try{localStorage.setItem('capri-server',url.href)}catch{};const frame=document.createElement('iframe');frame.src=url.href;frame.allow='clipboard-read; clipboard-write';frame.referrerPolicy='no-referrer';frame.style='position:fixed;inset:0;width:100%;height:100%;border:0;background:#080b0d';document.body.replaceChildren(frame)}catch(err){error.textContent=err.message||'Informe um endereço válido começando com https://'}})
+</script></body></html>
